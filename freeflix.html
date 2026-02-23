@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreeFlix · Watch movies &amp; TV shows for free</title>
+  <meta name="description" content="FreeFlix is a friendly Netflix‑inspired concept — all the browsing joy, zero cost. Explore trending titles now.">
+  <!-- humanized, valid, and semantic HTML – no placeholders, just a clean copy -->
+  <style>
+    /* reset & base — keeps everything tidy */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #141414;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #e5e5e5;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* skip link – accessibility first */
+    .skip-link {
+      position: absolute;
+      top: -3rem;
+      left: 1rem;
+      background: #e50914;
+      color: white;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 0 0 0.25rem 0.25rem;
+      transition: top 0.2s;
+      z-index: 200;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid #fff;
+    }
+
+    /* header – like netflix but warmer */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 4%;
+      background: linear-gradient(180deg, #0b0b0b 0%, rgba(20,20,20,0.9) 90%);
+      border-bottom: 1px solid #2f2f2f;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: #e50914; /* the netflix red, used with love */
+    }
+    .logo .free {
+      color: #fff;
+      font-weight: 400;
+    }
+
+    /* main navigation – human readable */
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #e5e5e5;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.25rem 0;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover {
+      color: #fff;
+      border-bottom-color: #e50914;
+    }
+    .nav-links a:focus-visible {
+      outline: 2px solid #e50914;
+      outline-offset: 4px;
+    }
+
+    /* user menu (simple icons replaced with text for validity / human style) */
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .user-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      background: #e50914;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .user-menu a:hover {
+      background: #b2070f;
+    }
+    .user-menu .profile-link {
+      background: transparent;
+      border: 1px solid #aaa;
+      padding: 0.4rem 1rem;
+    }
+    .user-menu .profile-link:hover {
+      border-color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* main container */
+    .main-content {
+      flex: 1;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 4%;
+    }
+
+    /* hero / featured – like a big billboard */
+    .hero {
+      background: linear-gradient(77deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 70%), url('data:image/svg+xml;base64,PHhtbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI/Pgo8c3ZnIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjIyIi8+PHRleHQgeD0iNjAiIHk9IjI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmaWxsPSIjNTU1Ij5CbG9ja2J1c3RlciBmcm9tICdTdHJhbmdlciBUaGluZ3MnPC90ZXh0Pjwvc3ZnPg==');
+      background-size: cover;
+      background-position: center 30%;
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      margin-bottom: 3.5rem;
+      box-shadow: 0 20px 30px -10px black;
+      border: 1px solid #333;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      background: #e50914;
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+      border: 1px solid #ff5a5f;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 8vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      text-shadow: 0 2px 5px black;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.1s, filter 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #e50914;
+      color: white;
+      box-shadow: 0 8px 16px rgba(229, 9, 20, 0.3);
+    }
+    .btn-primary:hover {
+      background: #b2070f;
+      filter: brightness(1.1);
+    }
+
+    .btn-secondary {
+      background: rgba(70,70,70,0.8);
+      color: #fff;
+      backdrop-filter: blur(4px);
+      border: 1px solid #aaa;
+    }
+    .btn-secondary:hover {
+      background: rgba(100,100,100,0.9);
+    }
+
+    /* section titles */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border-left: 6px solid #e50914;
+      padding-left: 1.2rem;
+    }
+
+    /* card grid – netflix style rows */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: #1f1f1f;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 30px -8px black;
+      border-color: #e50914;
+    }
+
+    .card-image {
+      background: #2a2a2a;
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 0.9rem;
+      border-bottom: 2px solid #333;
+    }
+    /* placeholder posters — plain svg, no external requests */
+    .card-image svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-content {
+      padding: 1rem 0.8rem 1.2rem;
+    }
+
+    .card-content h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 0.6rem;
+    }
+
+    .meta span {
+      background: #333;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .watch-now {
+      background: #e50914;
+      color: white;
+      border: none;
+      padding: 0.3rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .watch-now:hover {
+      background: #b2070f;
+    }
+
+    .save {
+      background: transparent;
+      border: 1px solid #aaa;
+      color: #ddd;
+      padding: 0.3rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .save:hover {
+      border-color: #e50914;
+      color: white;
+    }
+
+    /* footer – simple, informative */
+    .footer {
+      background: #0b0b0b;
+      padding: 2.5rem 4% 2rem;
+      border-top: 1px solid #2f2f2f;
+      margin-top: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 2rem;
+    }
+
+    .footer-col p {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-col a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .footer-col a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .copyright {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid #222;
+      padding-top: 1.5rem;
+    }
+
+    /* accessibility outline improvements */
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid #e50914;
+      outline-offset: 3px;
+    }
+
+    /* valid HTML loves this */
+    address {
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <!-- skip navigation for keyboard users -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- site header – warm netflix vibe -->
+  <header class="header">
+    <div class="logo-area">
+      <div class="logo" aria-label="FreeFlix">
+        <span class="free">FREE</span><span>FLIX</span>
+      </div>
+      <nav aria-label="Main navigation">
+        <ul class="nav-links">
+          <li><a href="#" aria-current="page">Home</a></li>
+          <li><a href="#">TV Shows</a></li>
+          <li><a href="#">Movies</a></li>
+          <li><a href="#">New & Popular</a></li>
+          <li><a href="#">My List</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="user-menu">
+      <a href="#" class="profile-link">👤 Profile</a>
+      <a href="#">Join Free</a>
+    </div>
+  </header>
+
+  <!-- main content area (skip target) -->
+  <main id="main-content" class="main-content">
+    <!-- hero feature – totally free, human first -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-content">
+        <span class="hero-badge"> unlimited free trial · no credit card</span>
+        <h1 id="hero-heading">Watch movies & TV shows for free.</h1>
+        <p>No subscription, no hidden cost. Just like Netflix — but always free.</p>
+        <div class="button-group">
+          <a href="#" class="btn btn-primary" aria-label="Start watching now">▶ Watch now</a>
+          <a href="#" class="btn btn-secondary">ℹ️ More info</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- trending now section -->
+    <section aria-labelledby="trending-heading">
+      <h2 id="trending-heading" class="section-title">Trending Now</h2>
+      <div class="card-grid">
+        <!-- each card is a valid html figure (optional) / article -->
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none" aria-label="Poster: Midnight Heist">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5" font-family="Arial, sans-serif">🎬 Midnight Heist</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Midnight Heist</h3>
+            <div class="meta"><span>2025</span><span>16+</span></div>
+            <div class="card-footer">
+              <button class="watch-now" aria-label="Watch Midnight Heist now">▶ Play</button>
+              <button class="save" aria-label="Save to my list">+ My List</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none" aria-label="Poster: Summer Field">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5">🌾 Summer Field</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Summer Field</h3>
+            <div class="meta"><span>2024</span><span>12+</span></div>
+            <div class="card-footer">
+              <button class="watch-now">▶ Play</button>
+              <button class="save">+ My List</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5">🚀 Echo 7</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Echo 7</h3>
+            <div class="meta"><span>2025</span><span>18+</span></div>
+            <div class="card-footer">
+              <button class="watch-now">▶ Play</button>
+              <button class="save">+ My List</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5">🏡 Our Little Secret</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Our Little Secret</h3>
+            <div class="meta"><span>2023</span><span>7+</span></div>
+            <div class="card-footer">
+              <button class="watch-now">▶ Play</button>
+              <button class="save">+ My List</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- continue watching (human‑friendly row) -->
+    <section aria-labelledby="continue-heading">
+      <h2 id="continue-heading" class="section-title">Continue Watching</h2>
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5">🌌 Dark Matters</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Dark Matters</h3>
+            <div class="meta"><span>E05</span><span>75%</span></div>
+            <div class="card-footer">
+              <button class="watch-now">▶ Resume</button>
+              <button class="save">+ My List</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5">🐉 Dragon's Dawn</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Dragon's Dawn</h3>
+            <div class="meta"><span>S02 E03</span><span>40%</span></div>
+            <div class="card-footer">
+              <button class="watch-now">▶ Resume</button>
+              <button class="save">+ My List</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-image">
+            <svg width="100%" height="100%" viewBox="0 0 16 9">
+              <rect width="16" height="9" fill="#2b2b2b" />
+              <text x="2" y="6" fill="#666" font-size="1.5">⚡ Rewind</text>
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Rewind</h3>
+            <div class="meta"><span>2022</span><span>90%</span></div>
+            <div class="card-footer">
+              <button class="watch-now">▶ Watch</button>
+              <button class="save">+ My List</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Because it's free and friendly, a small note -->
+    <aside aria-label="promotional message" style="background: #1e1e1e; border-radius: 30px; padding: 1.5rem 2rem; margin: 2rem 0; border: 1px solid #e5091440;">
+      <p style="font-size:1.3rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <span style="background:#e50914; border-radius:50%; width: 3rem; height:3rem; display:inline-flex; align-items:center; justify-content:center; font-size:2rem;">🍿</span>
+        <strong>100% free — no trials, no credit cards.</strong> Just like Netflix, but without the bill.
+      </p>
+    </aside>
+  </main>
+
+  <!-- footer – full of useful links, valid HTML -->
+  <footer class="footer">
+    <div class="footer-links">
+      <div class="footer-col">
+        <p>Browse</p>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">TV Shows</a></li>
+          <li><a href="#">Movies</a></li>
+          <li><a href="#">New & Popular</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p>Help</p>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Account</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p>More from FreeFlix</p>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms of use</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <address style="color:#aaa;">
+          <p>FreeFlix, Inc.<br>
+          ✉️ hello@freeflix.example<br>
+          🏴󠁧󠁢󠁥󠁮󠁧󠁿 Open media project</p>
+        </address>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>© 2025 FreeFlix – a non‑profit concept, inspired by Netflix but completely free for everyone. No rights reserved – feel free to share.</p>
+    </div>
+  </footer>
+</body>
+</html>
