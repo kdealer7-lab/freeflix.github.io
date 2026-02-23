@@ -1,619 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FreeFlix · Watch movies &amp; TV shows for free</title>
-  <meta name="description" content="FreeFlix is a friendly Netflix‑inspired concept — all the browsing joy, zero cost. Explore trending titles now.">
-  <!-- humanized, valid, and semantic HTML – no placeholders, just a clean copy -->
-  <style>
-    /* reset & base — keeps everything tidy */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeFlix · Watch free movies & TV shows</title>
+    <meta name="description" content="FreeFlix is a Netflix-inspired platform where you can watch movies and TV shows for free. No subscription, no credit card needed.">
+    <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: #141414;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      color: #e5e5e5;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+        body {
+            background: #141414;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #e5e5e5;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* skip link – accessibility first */
-    .skip-link {
-      position: absolute;
-      top: -3rem;
-      left: 1rem;
-      background: #e50914;
-      color: white;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-      font-weight: 600;
-      border-radius: 0 0 0.25rem 0.25rem;
-      transition: top 0.2s;
-      z-index: 200;
-    }
-    .skip-link:focus {
-      top: 0;
-      outline: 2px solid #fff;
-    }
+        /* SKIP LINK */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #e50914;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 0 0 4px 4px;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
 
-    /* header – like netflix but warmer */
-    .header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 4%;
-      background: linear-gradient(180deg, #0b0b0b 0%, rgba(20,20,20,0.9) 90%);
-      border-bottom: 1px solid #2f2f2f;
-    }
+        /* HEADER */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 4%;
+            background: linear-gradient(180deg, #0b0b0b 0%, #141414 100%);
+            border-bottom: 1px solid #333;
+        }
 
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
 
-    .logo {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-    .logo span {
-      color: #e50914; /* the netflix red, used with love */
-    }
-    .logo .free {
-      color: #fff;
-      font-weight: 400;
-    }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: #e50914;
+        }
+        .logo .free {
+            color: #ffffff;
+        }
 
-    /* main navigation – human readable */
-    .nav-links {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      list-style: none;
-    }
-    .nav-links a {
-      color: #e5e5e5;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1.1rem;
-      padding: 0.25rem 0;
-      transition: color 0.2s;
-      border-bottom: 2px solid transparent;
-    }
-    .nav-links a:hover {
-      color: #fff;
-      border-bottom-color: #e50914;
-    }
-    .nav-links a:focus-visible {
-      outline: 2px solid #e50914;
-      outline-offset: 4px;
-    }
+        /* NAVIGATION */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #e5e5e5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover {
+            color: #ffffff;
+            border-bottom-color: #e50914;
+        }
+        .nav-links a:focus {
+            outline: 2px solid #e50914;
+            outline-offset: 4px;
+        }
 
-    /* user menu (simple icons replaced with text for validity / human style) */
-    .user-menu {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .user-menu a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      background: #e50914;
-      padding: 0.4rem 1rem;
-      border-radius: 4px;
-      transition: background 0.2s;
-    }
-    .user-menu a:hover {
-      background: #b2070f;
-    }
-    .user-menu .profile-link {
-      background: transparent;
-      border: 1px solid #aaa;
-      padding: 0.4rem 1rem;
-    }
-    .user-menu .profile-link:hover {
-      border-color: #fff;
-      background: rgba(255,255,255,0.1);
-    }
+        /* USER MENU */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .user-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            background: #e50914;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+        .user-menu a:hover {
+            background: #b2070f;
+        }
+        .user-menu .profile-link {
+            background: transparent;
+            border: 1px solid #666;
+        }
+        .user-menu .profile-link:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+        }
 
-    /* main container */
-    .main-content {
-      flex: 1;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem 4%;
-    }
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 4%;
+            width: 100%;
+        }
 
-    /* hero / featured – like a big billboard */
-    .hero {
-      background: linear-gradient(77deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 70%), url('data:image/svg+xml;base64,PHhtbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI/Pgo8c3ZnIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjIyIi8+PHRleHQgeD0iNjAiIHk9IjI1MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmaWxsPSIjNTU1Ij5CbG9ja2J1c3RlciBmcm9tICdTdHJhbmdlciBUaGluZ3MnPC90ZXh0Pjwvc3ZnPg==');
-      background-size: cover;
-      background-position: center 30%;
-      border-radius: 12px;
-      padding: 3rem 2.5rem;
-      margin-bottom: 3.5rem;
-      box-shadow: 0 20px 30px -10px black;
-      border: 1px solid #333;
-    }
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(77deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 70%), #1a1a1a;
+            border-radius: 12px;
+            padding: 50px 40px;
+            margin-bottom: 50px;
+            border: 1px solid #333;
+        }
 
-    .hero-content {
-      max-width: 600px;
-    }
+        .hero-content {
+            max-width: 600px;
+        }
 
-    .hero-badge {
-      background: #e50914;
-      display: inline-block;
-      padding: 0.3rem 1rem;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 1rem;
-      border: 1px solid #ff5a5f;
-    }
+        .hero-badge {
+            background: #e50914;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
 
-    .hero h1 {
-      font-size: clamp(2.2rem, 8vw, 4rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 0.75rem;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.6);
-    }
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
-    .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-      text-shadow: 0 2px 5px black;
-    }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
 
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+        .button-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
 
-    .btn {
-      padding: 0.8rem 2rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: transform 0.1s, filter 0.2s;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
-    }
+        .btn {
+            padding: 12px 30px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-    .btn-primary {
-      background: #e50914;
-      color: white;
-      box-shadow: 0 8px 16px rgba(229, 9, 20, 0.3);
-    }
-    .btn-primary:hover {
-      background: #b2070f;
-      filter: brightness(1.1);
-    }
+        .btn-primary {
+            background: #e50914;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #b2070f;
+        }
 
-    .btn-secondary {
-      background: rgba(70,70,70,0.8);
-      color: #fff;
-      backdrop-filter: blur(4px);
-      border: 1px solid #aaa;
-    }
-    .btn-secondary:hover {
-      background: rgba(100,100,100,0.9);
-    }
+        .btn-secondary {
+            background: rgba(70,70,70,0.8);
+            color: white;
+            border: 1px solid #aaa;
+        }
+        .btn-secondary:hover {
+            background: rgba(100,100,100,0.9);
+        }
 
-    /* section titles */
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      border-left: 6px solid #e50914;
-      padding-left: 1.2rem;
-    }
+        /* SECTION TITLES */
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border-left: 6px solid #e50914;
+            padding-left: 20px;
+        }
 
-    /* card grid – netflix style rows */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
+        /* CARD GRID */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
 
-    .card {
-      background: #1f1f1f;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: 1px solid #333;
-      display: flex;
-      flex-direction: column;
-    }
-    .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 20px 30px -8px black;
-      border-color: #e50914;
-    }
+        .card {
+            background: #1f1f1f;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            border-color: #e50914;
+        }
 
-    .card-image {
-      background: #2a2a2a;
-      width: 100%;
-      aspect-ratio: 16/9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #aaa;
-      font-size: 0.9rem;
-      border-bottom: 2px solid #333;
-    }
-    /* placeholder posters — plain svg, no external requests */
-    .card-image svg {
-      width: 100%;
-      height: 100%;
-    }
+        .card-image {
+            background: #2a2a2a;
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
 
-    .card-content {
-      padding: 1rem 0.8rem 1.2rem;
-    }
+        .card-content {
+            padding: 16px 12px 20px;
+        }
 
-    .card-content h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+        .card-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    .meta {
-      display: flex;
-      gap: 1rem;
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-bottom: 0.6rem;
-    }
+        .meta {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+        .meta span {
+            background: #333;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
 
-    .meta span {
-      background: #333;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-    }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.5rem;
-    }
+        .watch-now {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .watch-now:hover {
+            background: #b2070f;
+        }
 
-    .watch-now {
-      background: #e50914;
-      color: white;
-      border: none;
-      padding: 0.3rem 1rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .watch-now:hover {
-      background: #b2070f;
-    }
+        .save {
+            background: transparent;
+            border: 1px solid #666;
+            color: #ddd;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .save:hover {
+            border-color: #e50914;
+            color: white;
+        }
 
-    .save {
-      background: transparent;
-      border: 1px solid #aaa;
-      color: #ddd;
-      padding: 0.3rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-    .save:hover {
-      border-color: #e50914;
-      color: white;
-    }
+        /* INFO ASIDE */
+        .info-box {
+            background: #1e1e1e;
+            border-radius: 30px;
+            padding: 24px 32px;
+            margin: 30px 0;
+            border: 1px solid #e50914;
+        }
+        .info-box p {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .info-icon {
+            background: #e50914;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
 
-    /* footer – simple, informative */
-    .footer {
-      background: #0b0b0b;
-      padding: 2.5rem 4% 2rem;
-      border-top: 1px solid #2f2f2f;
-      margin-top: 2rem;
-    }
+        /* FOOTER */
+        .footer {
+            background: #0b0b0b;
+            padding: 40px 4% 30px;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
 
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto 2rem;
-    }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto 30px;
+        }
 
-    .footer-col p {
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
+        .footer-col p {
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: white;
+        }
 
-    .footer-col ul {
-      list-style: none;
-    }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+        .footer-col a {
+            color: #aaa;
+            text-decoration: none;
+        }
+        .footer-col a:hover {
+            color: white;
+        }
 
-    .footer-col li {
-      margin-bottom: 0.6rem;
-    }
+        .copyright {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+        }
 
-    .footer-col a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-    .footer-col a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    .copyright {
-      text-align: center;
-      color: #666;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-      padding-top: 1.5rem;
-    }
-
-    /* accessibility outline improvements */
-    a:focus-visible, button:focus-visible {
-      outline: 3px solid #e50914;
-      outline-offset: 3px;
-    }
-
-    /* valid HTML loves this */
-    address {
-      font-style: normal;
-    }
-  </style>
+        /* FOCUS STATES */
+        a:focus, button:focus {
+            outline: 3px solid #e50914;
+            outline-offset: 3px;
+        }
+    </style>
 </head>
 <body>
-  <!-- skip navigation for keyboard users -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- SKIP LINK -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- site header – warm netflix vibe -->
-  <header class="header">
-    <div class="logo-area">
-      <div class="logo" aria-label="FreeFlix">
-        <span class="free">FREE</span><span>FLIX</span>
-      </div>
-      <nav aria-label="Main navigation">
-        <ul class="nav-links">
-          <li><a href="#" aria-current="page">Home</a></li>
-          <li><a href="#">TV Shows</a></li>
-          <li><a href="#">Movies</a></li>
-          <li><a href="#">New & Popular</a></li>
-          <li><a href="#">My List</a></li>
-        </ul>
-      </nav>
-    </div>
-
-    <div class="user-menu">
-      <a href="#" class="profile-link">👤 Profile</a>
-      <a href="#">Join Free</a>
-    </div>
-  </header>
-
-  <!-- main content area (skip target) -->
-  <main id="main-content" class="main-content">
-    <!-- hero feature – totally free, human first -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="hero-content">
-        <span class="hero-badge"> unlimited free trial · no credit card</span>
-        <h1 id="hero-heading">Watch movies & TV shows for free.</h1>
-        <p>No subscription, no hidden cost. Just like Netflix — but always free.</p>
-        <div class="button-group">
-          <a href="#" class="btn btn-primary" aria-label="Start watching now">▶ Watch now</a>
-          <a href="#" class="btn btn-secondary">ℹ️ More info</a>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo-area">
+            <div class="logo" aria-label="FreeFlix">
+                <span class="free">FREE</span><span>FLIX</span>
+            </div>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="#" aria-current="page">Home</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
         </div>
-      </div>
-    </section>
 
-    <!-- trending now section -->
-    <section aria-labelledby="trending-heading">
-      <h2 id="trending-heading" class="section-title">Trending Now</h2>
-      <div class="card-grid">
-        <!-- each card is a valid html figure (optional) / article -->
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none" aria-label="Poster: Midnight Heist">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5" font-family="Arial, sans-serif">🎬 Midnight Heist</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Midnight Heist</h3>
-            <div class="meta"><span>2025</span><span>16+</span></div>
-            <div class="card-footer">
-              <button class="watch-now" aria-label="Watch Midnight Heist now">▶ Play</button>
-              <button class="save" aria-label="Save to my list">+ My List</button>
+        <div class="user-menu">
+            <a href="#" class="profile-link">Profile</a>
+            <a href="#">Join Free</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="main-content">
+        <!-- HERO SECTION -->
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="hero-content">
+                <span class="hero-badge">UNLIMITED FREE TRIAL</span>
+                <h1 id="hero-heading">Watch movies & TV shows for free.</h1>
+                <p>No subscription, no credit card. Just like Netflix — but always free.</p>
+                <div class="button-group">
+                    <a href="#" class="btn btn-primary">Start Watching</a>
+                    <a href="#" class="btn btn-secondary">Learn More</a>
+                </div>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none" aria-label="Poster: Summer Field">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5">🌾 Summer Field</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Summer Field</h3>
-            <div class="meta"><span>2024</span><span>12+</span></div>
-            <div class="card-footer">
-              <button class="watch-now">▶ Play</button>
-              <button class="save">+ My List</button>
+        <!-- TRENDING SECTION -->
+        <section aria-labelledby="trending-heading">
+            <h2 id="trending-heading" class="section-title">Trending Now</h2>
+            <div class="card-grid">
+                <!-- CARD 1 -->
+                <article class="card">
+                    <div class="card-image">
+                        Midnight Heist
+                    </div>
+                    <div class="card-content">
+                        <h3>Midnight Heist</h3>
+                        <div class="meta">
+                            <span>2025</span>
+                            <span>16+</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Play</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CARD 2 -->
+                <article class="card">
+                    <div class="card-image">
+                        Summer Field
+                    </div>
+                    <div class="card-content">
+                        <h3>Summer Field</h3>
+                        <div class="meta">
+                            <span>2024</span>
+                            <span>12+</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Play</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CARD 3 -->
+                <article class="card">
+                    <div class="card-image">
+                        Echo 7
+                    </div>
+                    <div class="card-content">
+                        <h3>Echo 7</h3>
+                        <div class="meta">
+                            <span>2025</span>
+                            <span>18+</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Play</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CARD 4 -->
+                <article class="card">
+                    <div class="card-image">
+                        Our Little Secret
+                    </div>
+                    <div class="card-content">
+                        <h3>Our Little Secret</h3>
+                        <div class="meta">
+                            <span>2023</span>
+                            <span>7+</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Play</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5">🚀 Echo 7</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Echo 7</h3>
-            <div class="meta"><span>2025</span><span>18+</span></div>
-            <div class="card-footer">
-              <button class="watch-now">▶ Play</button>
-              <button class="save">+ My List</button>
+        <!-- CONTINUE WATCHING SECTION -->
+        <section aria-labelledby="continue-heading">
+            <h2 id="continue-heading" class="section-title">Continue Watching</h2>
+            <div class="card-grid">
+                <!-- CARD 1 -->
+                <article class="card">
+                    <div class="card-image">
+                        Dark Matters
+                    </div>
+                    <div class="card-content">
+                        <h3>Dark Matters</h3>
+                        <div class="meta">
+                            <span>E05</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Resume</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CARD 2 -->
+                <article class="card">
+                    <div class="card-image">
+                        Dragon's Dawn
+                    </div>
+                    <div class="card-content">
+                        <h3>Dragon's Dawn</h3>
+                        <div class="meta">
+                            <span>S02 E03</span>
+                            <span>40%</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Resume</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CARD 3 -->
+                <article class="card">
+                    <div class="card-image">
+                        Rewind
+                    </div>
+                    <div class="card-content">
+                        <h3>Rewind</h3>
+                        <div class="meta">
+                            <span>2022</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="watch-now">Watch</button>
+                            <button class="save">My List</button>
+                        </div>
+                    </div>
+                </article>
             </div>
-          </div>
-        </article>
+        </section>
 
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9" preserveAspectRatio="none">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5">🏡 Our Little Secret</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Our Little Secret</h3>
-            <div class="meta"><span>2023</span><span>7+</span></div>
-            <div class="card-footer">
-              <button class="watch-now">▶ Play</button>
-              <button class="save">+ My List</button>
+        <!-- INFO ASIDE -->
+        <aside class="info-box" aria-label="Free service information">
+            <p>
+                <span class="info-icon">🍿</span>
+                <strong>100% free — no trials, no credit cards.</strong> Just like Netflix, but without the bill.
+            </p>
+        </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-links">
+            <div class="footer-col">
+                <p>Browse</p>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                </ul>
             </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- continue watching (human‑friendly row) -->
-    <section aria-labelledby="continue-heading">
-      <h2 id="continue-heading" class="section-title">Continue Watching</h2>
-      <div class="card-grid">
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5">🌌 Dark Matters</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Dark Matters</h3>
-            <div class="meta"><span>E05</span><span>75%</span></div>
-            <div class="card-footer">
-              <button class="watch-now">▶ Resume</button>
-              <button class="save">+ My List</button>
+            <div class="footer-col">
+                <p>Help</p>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
             </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5">🐉 Dragon's Dawn</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Dragon's Dawn</h3>
-            <div class="meta"><span>S02 E03</span><span>40%</span></div>
-            <div class="card-footer">
-              <button class="watch-now">▶ Resume</button>
-              <button class="save">+ My List</button>
+            <div class="footer-col">
+                <p>More</p>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
             </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-image">
-            <svg width="100%" height="100%" viewBox="0 0 16 9">
-              <rect width="16" height="9" fill="#2b2b2b" />
-              <text x="2" y="6" fill="#666" font-size="1.5">⚡ Rewind</text>
-            </svg>
-          </div>
-          <div class="card-content">
-            <h3>Rewind</h3>
-            <div class="meta"><span>2022</span><span>90%</span></div>
-            <div class="card-footer">
-              <button class="watch-now">▶ Watch</button>
-              <button class="save">+ My List</button>
+            <div class="footer-col">
+                <address>
+                    FreeFlix, Inc.<br>
+                    Email: hello@freeflix.example<br>
+                    Open media project
+                </address>
             </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Because it's free and friendly, a small note -->
-    <aside aria-label="promotional message" style="background: #1e1e1e; border-radius: 30px; padding: 1.5rem 2rem; margin: 2rem 0; border: 1px solid #e5091440;">
-      <p style="font-size:1.3rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <span style="background:#e50914; border-radius:50%; width: 3rem; height:3rem; display:inline-flex; align-items:center; justify-content:center; font-size:2rem;">🍿</span>
-        <strong>100% free — no trials, no credit cards.</strong> Just like Netflix, but without the bill.
-      </p>
-    </aside>
-  </main>
-
-  <!-- footer – full of useful links, valid HTML -->
-  <footer class="footer">
-    <div class="footer-links">
-      <div class="footer-col">
-        <p>Browse</p>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">TV Shows</a></li>
-          <li><a href="#">Movies</a></li>
-          <li><a href="#">New & Popular</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <p>Help</p>
-        <ul>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Account</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <p>More from FreeFlix</p>
-        <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms of use</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <address style="color:#aaa;">
-          <p>FreeFlix, Inc.<br>
-          ✉️ hello@freeflix.example<br>
-          🏴󠁧󠁢󠁥󠁮󠁧󠁿 Open media project</p>
-        </address>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>© 2025 FreeFlix – a non‑profit concept, inspired by Netflix but completely free for everyone. No rights reserved – feel free to share.</p>
-    </div>
-  </footer>
+        </div>
+        <div class="copyright">
+            <p>© 2025 FreeFlix – a non-profit concept, inspired by Netflix but completely free.</p>
+        </div>
+    </footer>
 </body>
 </html>
